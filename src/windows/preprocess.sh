@@ -98,6 +98,7 @@ DLLDEF_DEFINES="\
          -e "s!@ac_cv___attribute___noreturn@!__declspec(noreturn)!g" \
          -e "s!@ac_cv___attribute___noinline@!!g" \
          -e "s!@ac_cv___attribute___printf_4_5@!!g" \
+         -e "s!@ac_cv___attribute___cold@!!g" \
          -e "s!@ac_google_attribute@!${HAVE___ATTRIBUTE__:-0}!g" \
          -e "s!@ac_google_end_namespace@!$_END_GOOGLE_NAMESPACE_!g" \
          -e "s!@ac_google_namespace@!$GOOGLE_NAMESPACE!g" \

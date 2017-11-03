@@ -86,10 +86,12 @@ if test x"$ac_cv___attribute__" = x"yes"; then
   ac_cv___attribute___noreturn="__attribute__ ((noreturn))"
   ac_cv___attribute___noinline="__attribute__ ((noinline))"
   ac_cv___attribute___printf_4_5="__attribute__((__format__ (__printf__, 4, 5)))"
+  ac_cv___attribute___cold="__attribute__ ((cold))"
 else
   ac_cv___attribute___noreturn=
   ac_cv___attribute___noinline=
   ac_cv___attribute___printf_4_5=
+  ac_cv___attribute___cold=
 fi
 
 AX_C___BUILTIN_EXPECT
@@ -215,6 +217,7 @@ AC_SUBST(ac_cv_cxx_using_operator)
 AC_SUBST(ac_cv___attribute___noreturn)
 AC_SUBST(ac_cv___attribute___noinline)
 AC_SUBST(ac_cv___attribute___printf_4_5)
+AC_SUBST(ac_cv___attribute___cold)
 AC_SUBST(ac_cv_have___builtin_expect)
 AC_SUBST(ac_cv_have_stdint_h)
 AC_SUBST(ac_cv_have_systypes_h)

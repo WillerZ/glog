@@ -402,9 +402,9 @@ DECLARE_bool(stop_logging_if_full_disk);
 #endif
 
 #if GOOGLE_STRIP_LOG <= 1
-#define COMPACT_GOOGLE_LOG_WARNING @ac_google_namespace@::LogMessage( \
+#define COMPACT_GOOGLE_LOG_WARNING @ac_google_namespace@::ColdLogMessage( \
       __FILE__, __LINE__, @ac_google_namespace@::GLOG_WARNING)
-#define LOG_TO_STRING_WARNING(message) @ac_google_namespace@::LogMessage( \
+#define LOG_TO_STRING_WARNING(message) @ac_google_namespace@::ColdLogMessage( \
       __FILE__, __LINE__, @ac_google_namespace@::GLOG_WARNING, message)
 #else
 #define COMPACT_GOOGLE_LOG_WARNING @ac_google_namespace@::NullStream()
@@ -412,9 +412,9 @@ DECLARE_bool(stop_logging_if_full_disk);
 #endif
 
 #if GOOGLE_STRIP_LOG <= 2
-#define COMPACT_GOOGLE_LOG_ERROR @ac_google_namespace@::LogMessage( \
+#define COMPACT_GOOGLE_LOG_ERROR @ac_google_namespace@::ColdLogMessage( \
       __FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR)
-#define LOG_TO_STRING_ERROR(message) @ac_google_namespace@::LogMessage( \
+#define LOG_TO_STRING_ERROR(message) @ac_google_namespace@::ColdLogMessage( \
       __FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR, message)
 #else
 #define COMPACT_GOOGLE_LOG_ERROR @ac_google_namespace@::NullStream()
@@ -424,7 +424,7 @@ DECLARE_bool(stop_logging_if_full_disk);
 #if GOOGLE_STRIP_LOG <= 3
 #define COMPACT_GOOGLE_LOG_FATAL @ac_google_namespace@::LogMessageFatal( \
       __FILE__, __LINE__)
-#define LOG_TO_STRING_FATAL(message) @ac_google_namespace@::LogMessage( \
+#define LOG_TO_STRING_FATAL(message) @ac_google_namespace@::ColdLogMessage( \
       __FILE__, __LINE__, @ac_google_namespace@::GLOG_FATAL, message)
 #else
 #define COMPACT_GOOGLE_LOG_FATAL @ac_google_namespace@::NullStreamFatal()
@@ -442,7 +442,7 @@ DECLARE_bool(stop_logging_if_full_disk);
 #if !DCHECK_IS_ON()
 #define COMPACT_GOOGLE_LOG_DFATAL COMPACT_GOOGLE_LOG_ERROR
 #elif GOOGLE_STRIP_LOG <= 3
-#define COMPACT_GOOGLE_LOG_DFATAL @ac_google_namespace@::LogMessage( \
+#define COMPACT_GOOGLE_LOG_DFATAL @ac_google_namespace@::ColdLogMessage( \
       __FILE__, __LINE__, @ac_google_namespace@::GLOG_FATAL)
 #else
 #define COMPACT_GOOGLE_LOG_DFATAL @ac_google_namespace@::NullStreamFatal()
@@ -453,28 +453,28 @@ DECLARE_bool(stop_logging_if_full_disk);
   @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_INFO, counter, \
   &@ac_google_namespace@::LogMessage::SendToSyslogAndLog)
 #define GOOGLE_LOG_WARNING(counter)  \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_WARNING, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_WARNING, counter, \
   &@ac_google_namespace@::LogMessage::SendToLog)
 #define SYSLOG_WARNING(counter)  \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_WARNING, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_WARNING, counter, \
   &@ac_google_namespace@::LogMessage::SendToSyslogAndLog)
 #define GOOGLE_LOG_ERROR(counter)  \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR, counter, \
   &@ac_google_namespace@::LogMessage::SendToLog)
 #define SYSLOG_ERROR(counter)  \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR, counter, \
   &@ac_google_namespace@::LogMessage::SendToSyslogAndLog)
 #define GOOGLE_LOG_FATAL(counter) \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_FATAL, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_FATAL, counter, \
   &@ac_google_namespace@::LogMessage::SendToLog)
 #define SYSLOG_FATAL(counter) \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_FATAL, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_FATAL, counter, \
   &@ac_google_namespace@::LogMessage::SendToSyslogAndLog)
 #define GOOGLE_LOG_DFATAL(counter) \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::DFATAL_LEVEL, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::DFATAL_LEVEL, counter, \
   &@ac_google_namespace@::LogMessage::SendToLog)
 #define SYSLOG_DFATAL(counter) \
-  @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::DFATAL_LEVEL, counter, \
+  @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::DFATAL_LEVEL, counter, \
   &@ac_google_namespace@::LogMessage::SendToSyslogAndLog)
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__) || defined(__CYGWIN32__)
@@ -487,7 +487,7 @@ DECLARE_bool(stop_logging_if_full_disk);
                          FORMAT_MESSAGE_FROM_SYSTEM, \
                          0, result, 0, msg, 100, NULL); \
     if (message_length > 0) { \
-      @ac_google_namespace@::LogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR, 0, \
+      @ac_google_namespace@::ColdLogMessage(__FILE__, __LINE__, @ac_google_namespace@::GLOG_ERROR, 0, \
           &@ac_google_namespace@::LogMessage::SendToLog).stream() \
           << reinterpret_cast<const char*>(message); \
       LocalFree(message); \
@@ -1282,6 +1282,19 @@ private:
 
   LogMessage(const LogMessage&);
   void operator=(const LogMessage&);
+};
+
+class GOOGLE_GLOG_DLL_DECL ColdLogMessage : public LogMessage {
+public:
+  // Pass through all the constructors
+  ColdLogMessage(const char* file, int line, LogSeverity severity, int ctr, SendMethod send_method) : LogMessage(file, line, severity, ctr, send_method) {}
+  ColdLogMessage(const char* file, int line) : LogMessage(file, line) {}
+  ColdLogMessage(const char* file, int line, LogSeverity severity) : LogMessage(file, line, severity) {}
+  ColdLogMessage(const char* file, int line, LogSeverity severity, LogSink* sink, bool also_send_to_log):LogMessage(file, line, severity, sink, also_send_to_log) {}
+  ColdLogMessage(const char* file, int line, LogSeverity severity, std::vector<std::string>* outvec) : LogMessage(file, line, severity, outvec) {}
+  ColdLogMessage(const char* file, int line, LogSeverity severity, std::string* message) : LogMessage(file, line, severity, message) {}
+  ColdLogMessage(const char* file, int line, const CheckOpString& result) : LogMessage(file, line, result) {}
+  @ac_cv___attribute___cold@ ~ColdLogMessage() {};
 };
 
 // This class happens to be thread-hostile because all instances share
